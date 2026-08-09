@@ -52,22 +52,36 @@
             arch = archFor.${system};
             hash = hashes.${system};
           };
+          natfrp-runtime = pkgs.callPackage ./runtime.nix {
+            inherit natfrp-launcher;
+          };
+          natfrp-interactive = pkgs.callPackage ./launcher.nix {
+            inherit natfrp-runtime;
+          };
         in
         {
-          inherit natfrp-launcher;
-          default = natfrp-launcher;
+          inherit natfrp-launcher natfrp-runtime natfrp-interactive;
+          default = natfrp-interactive;
         }
       );
 
       apps = forAllSystems (system: {
+        launcher = {
+          type = "app";
+          program = "${self.packages.${system}.natfrp-interactive}/bin/natfrp-launcher";
+          meta.description = "Run the interactive SakuraFrp Launcher setup";
+        };
+        runtime = {
+          type = "app";
+          program = "${self.packages.${system}.natfrp-runtime}/bin/natfrp";
+          meta.description = "Run SakuraFrp Launcher with the Docker-compatible Nix runtime";
+        };
         natfrp-service = {
           type = "app";
-          program = "${self.packages.${system}.default}/bin/natfrp-service";
+          program = "${self.packages.${system}.natfrp-launcher}/bin/natfrp-service";
           meta.description = "Run SakuraFrp Launcher service";
         };
-        default = self.apps.${system}.natfrp-service;
+        default = self.apps.${system}.launcher;
       });
-
-      nixosModules.default = import ./module.nix { inherit self; };
     };
 }
