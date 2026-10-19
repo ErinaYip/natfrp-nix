@@ -83,6 +83,23 @@ nix build .#natfrp-launcher
 ./result/bin/frpc -v
 ```
 
+## 更新哈希
+
+上游会在同一版本号下重新发布 tar 包，所以 `flake.nix` 里固定的 `hashes` 可能在
+`version` 不变时就已经失效。重新计算：
+
+```sh
+./update-hashes.sh        # 保持当前版本
+./update-hashes.sh 3.1.9  # 同时升级版本并刷新哈希
+```
+
+手动更新也可以：先看构建报错里的 `got:` 哈希，再把它写回 `flake.nix`：
+
+```sh
+nix build .#natfrp-launcher
+# error: hash mismatch ... got: sha256-...
+```
+
 ## 上游说明
 
 `launcher.nix` 参考上游 `launcher.sh` 的 Docker 模式交互流程，来源是 `https://doc.natfrp.com/launcher.sh`；`runtime.nix` 参考官方 `natfrp.com/launcher` Docker 镜像中的 `/run.sh`。上游版权和署名属于 SakuraFrp/Natfrp 项目；如果之后把这些脚本原文 vendoring 到仓库，或同步上游脚本，请保留原始版权和署名信息。

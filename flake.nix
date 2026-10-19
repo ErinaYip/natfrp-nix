@@ -26,11 +26,11 @@
       };
 
       hashes = {
-        x86_64-linux = "sha256-AHFAUqiPHll2osQ3nHA8mF7uWULPKG2rhrtGaLJye3g=";
-        aarch64-linux = "sha256-NE+8A6izSnRvGWNerqGOnGlnOzHxMoLeLYw/EfT9nGs=";
-        i686-linux = "sha256-nv2yUg42n/zUy75WPD1cMJggINRKDZj8DKnoCXtnQ4M=";
-        armv7l-linux = "sha256-ANa//H2ib9yseKMCwMLLdeK0gD1BQ3YcayPq9C8D9S8=";
-        riscv64-linux = "sha256-FezXskx5xclwjM5MVY6Guvd3bKshCMI0SetCs+fcmXE=";
+        x86_64-linux = "sha256-xwWd9835sGrwuRgrvXUX2Xj0dNwLRKhuAffvSpJwQio=";
+        aarch64-linux = "sha256-Mu/zM/qLZjPCFudNUwbHMIM+7O95Ta8StUm4WIR48kM=";
+        i686-linux = "sha256-zI5D5aNlKJMdl9urnBI93bl9oHDMldC3N77r12tTUqg=";
+        armv7l-linux = "sha256-cVBamfZFJDRr2z5Ro/03Bj1QkbNcTnpdRMMsjgH8tpw=";
+        riscv64-linux = "sha256-zx+LF8OQQU+rHm73c1W8qvJP4eaXhGgxP4pbkU35+AQ=";
       };
 
       forAllSystems = f: lib.genAttrs systems (system: f system);

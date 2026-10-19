@@ -92,6 +92,24 @@ nix build .#natfrp-launcher
 ./result/bin/frpc -v
 ```
 
+## Updating Hashes
+
+Upstream re-publishes the tarballs in place, so the pinned `hashes` in
+`flake.nix` can go stale for an unchanged `version`. Refresh them with:
+
+```sh
+./update-hashes.sh        # keep the current version
+./update-hashes.sh 3.1.9  # bump version and refresh hashes
+```
+
+If you prefer doing it by hand, the fetch is a plain fixed-output derivation;
+capture the `got:` hash from the mismatch error and put it into `flake.nix`:
+
+```sh
+nix build .#natfrp-launcher
+# error: hash mismatch ... got: sha256-...
+```
+
 ## Upstream Notes
 
 `launcher.nix` mirrors the Docker-mode interaction flow from upstream
